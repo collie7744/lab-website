@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Research Lab</title>
+  <title>Ocean Data Science Lab</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
     body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
 
-    /* 상단 고정 네비게이션 배너 */
+    /* 1. 상단 고정 네비게이션 배너 */
     header {
       position: sticky;
       top: 0;
@@ -22,7 +22,7 @@
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      gap: 10px;
+      gap: 8px;
       padding: 12px 20px;
       overflow-x: auto;
     }
@@ -30,8 +30,8 @@
     .nav-btn {
       background: none;
       border: none;
-      padding: 10px 20px;
-      font-size: 16px;
+      padding: 10px 18px;
+      font-size: 15px;
       font-weight: 600;
       color: #6c757d;
       cursor: pointer;
@@ -43,7 +43,23 @@
     .nav-btn:hover { background-color: #f1f3f5; color: #212529; }
     .nav-btn.active { color: #0d6efd; background-color: #e7f1ff; }
 
-    /* 메인 콘텐츠 영역 */
+    /* 2. 대표 이미지 배너 영역 */
+    .hero-banner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 20px auto 0 auto;
+      padding: 0 20px;
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    /* 3. 메인 콘텐츠 영역 */
     main { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
     .tab-content { display: none; animation: fadeIn 0.3s ease; }
     .tab-content.active { display: block; }
@@ -53,70 +69,263 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 연구실 레이아웃 카드 스타일 */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-    .card { background: #fff; padding: 24px; border-radius: 8px; border: 1px solid #dee2e6; }
-    h2 { margin-bottom: 10px; color: #111; }
+    /* 레이아웃 & 카드 공통 스타일 */
+    h2 { font-size: 24px; margin-bottom: 16px; color: #111; border-bottom: 2px solid #0d6efd; display: inline-block; padding-bottom: 4px; }
+    h3 { font-size: 18px; margin-bottom: 8px; color: #0d6efd; }
+    
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+
+    .card { background: #fff; padding: 24px; border-radius: 10px; border: 1px solid #dee2e6; }
+    .card img { width: 100%; border-radius: 8px; margin-bottom: 12px; object-fit: cover; }
+
+    /* 교수님/인물 프로필 레이아웃 */
+    .profile-flex { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+    .profile-img { width: 220px; height: 260px; object-fit: cover; border-radius: 10px; }
+    .profile-info { flex: 1; min-width: 280px; }
+
+    /* 표(Table) 스타일 */
+    .pub-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      margin-bottom: 32px;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .pub-table th, .pub-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .pub-table th { background-color: #f1f3f5; font-weight: 600; color: #495057; }
+    .pub-table tr:hover { background-color: #f8f9fa; }
+    .pub-table a { color: #0d6efd; text-decoration: none; font-weight: 500; }
+    .pub-table a:hover { text-decoration: underline; }
+
+    .section-title { margin-top: 24px; margin-bottom: 12px; font-size: 20px; color: #333; }
   </style>
 </head>
 <body>
 
-  <!-- 상단 고정 배너 -->
+  <!-- 1. 상단 고정 네비게이션 배너 -->
   <header>
     <div class="nav-container">
-      <button class="nav-btn active" onclick="openTab(event, 'research')">Research</button>
+      <button class="nav-btn active" onclick="openTab(event, 'home')">Home</button>
+      <button class="nav-btn" onclick="openTab(event, 'professor')">Professor</button>
+      <button class="nav-btn" onclick="openTab(event, 'research')">Research</button>
       <button class="nav-btn" onclick="openTab(event, 'publications')">Publications</button>
       <button class="nav-btn" onclick="openTab(event, 'members')">Members</button>
-      <button class="nav-btn" onclick="openTab(event, 'contact')">Contact</button>
       <button class="nav-btn" onclick="openTab(event, 'gallery')">Gallery</button>
+      <button class="nav-btn" onclick="openTab(event, 'contact')">Contact</button>
     </div>
   </header>
 
-  <!-- 본문 컨텐츠 -->
+  <!-- 2. 대표 배너 이미지 (사용자 지정 이미지) -->
+  <div class="hero-banner">
+    <!-- 파일 경로를 실제 이미지 파일명으로 변경하세요 (예: hero-image.jpg) -->
+    <img src="images/main-banner.jpg" alt="Lab Representative Banner Image" onerror="this.src='https://via.placeholder.com/1200x320?text=Lab+Representative+Banner+Image'">
+  </div>
+
+  <!-- 3. 메인 콘텐츠 영역 -->
   <main>
-    <div id="research" class="tab-content active">
-      <h2>Research Areas</h2>
-      <p>연구실의 주요 연구 분야 및 진행 중인 프로젝트를 소개합니다.</p>
-      <div class="grid">
-        <div class="card"><h3>AI & Data Science</h3><p>데이터 기반 예측 모델 및 시스템 구조 연구</p></div>
-        <div class="card"><h3>Ocean & Climate</h3><p>해양 및 기후 데이터 분석 모델링</p></div>
+    <!-- [Home] -->
+    <div id="home" class="tab-content active">
+      <h2>Home</h2>
+      <div class="card" style="margin-top: 16px;">
+        <div class="profile-flex">
+          <img src="images/lab-main.jpg" alt="Lab Photo" class="profile-img" onerror="this.src='https://via.placeholder.com/220x260?text=Lab+Main+Photo'">
+          <div class="profile-info">
+            <h3>Welcome to Our Research Lab</h3>
+            <p style="margin-top: 10px;">
+              우리 연구실은 기후 변화와 해양 수산 빅데이터를 분석하여 지속 가능한 해양 환경과 예측 모델을 연구하는 연구실입니다. 
+              다양한 데이터 과학 기법과 지구시스템 모형을 결합하여 가치 있는 해양 환경 인사이트를 도출하고 있습니다.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- [Professor] -->
+    <div id="professor" class="tab-content">
+      <h2>Professor</h2>
+      <div class="card" style="margin-top: 16px;">
+        <div class="profile-flex">
+          <img src="images/professor.jpg" alt="Professor Photo" class="profile-img" onerror="this.src='https://via.placeholder.com/220x260?text=Professor+Photo'">
+          <div class="profile-info">
+            <h3>홍길동 (Gildong Hong, Ph.D.)</h3>
+            <p style="margin-top: 12px;"><strong>Office:</strong> 해양관 305호</p>
+            <p><strong>Phone:</strong> 051-123-4567</p>
+            <p><strong>Email:</strong> professor@university.ac.kr</p>
+            
+            <h4 style="margin-top: 20px; margin-bottom: 8px;">Experience</h4>
+            <ul style="padding-left: 20px;">
+              <li>2020 - Present: Professor, Dept. of Data Science</li>
+              <li>2018 - 2020: Senior Researcher, National Ocean Institute</li>
+              <li>2015 - 2018: Postdoctoral Researcher, Ocean Data Center</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [Research] -->
+    <div id="research" class="tab-content">
+      <h2>Research Areas</h2>
+      <div class="grid-3">
+        <div class="card">
+          <img src="images/research1.jpg" alt="Ocean Climate Change" style="height: 180px;" onerror="this.src='https://via.placeholder.com/300x180?text=Ocean+Climate+Change'">
+          <h3>Ocean Climate Change</h3>
+          <p>지구 온난화와 기후 변동성이 해양 순환 및 물성에 미치는 영향을 다각도로 분석하고, 장기적인 해양 환경 변화 파동을 정밀 추적합니다.</p>
+        </div>
+        <div class="card">
+          <img src="images/research2.jpg" alt="Climate Driven Fisheries" style="height: 180px;" onerror="this.src='https://via.placeholder.com/300x180?text=Climate+Driven+Fisheries'">
+          <h3>Climate Driven Fisheries</h3>
+          <p>기후 변화에 따른 수산 자원의 수온 및 생태적 이동 패턴을 데이터 기반 모델링으로 해석하여 수산 자원의 지속 가능한 관리 방안을 연구합니다.</p>
+        </div>
+        <div class="card">
+          <img src="images/research3.jpg" alt="Ocean Modeling" style="height: 180px;" onerror="this.src='https://via.placeholder.com/300x180?text=Ocean+Modeling'">
+          <h3>Ocean Modeling</h3>
+          <p>지구시스템 모형(CMIP6 등) 및 고해상도 수치 모델을 활용하여 해양 표층수온 및 용존산소량 등 정밀한 미래 해양 예측 환경을 구축합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- [Publications] -->
     <div id="publications" class="tab-content">
       <h2>Publications</h2>
-      <ul style="margin-top: 15px; padding-left: 20px;">
-        <li><strong>[2026]</strong> Author A, "Recent Advancement in Data Analysis", <em>Journal Name</em>.</li>
-      </ul>
+
+      <h3 class="section-title">Journal Articles</h3>
+      <table class="pub-table">
+        <thead>
+          <tr>
+            <th style="width: 10%;">Year</th>
+            <th style="width: 65%;">Title & Authors</th>
+            <th style="width: 25%;">Journal / Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026</td>
+            <td><strong>Projected changes in seasonal ocean oxygenation using CMIP6 models</strong><br><small>G. Hong, A. Author, B. Author</small></td>
+            <td><a href="https://doi.org/10.1000/example1" target="_blank">[Paper Link]</a> <em>Ocean Science</em></td>
+          </tr>
+          <tr>
+            <td>2025</td>
+            <td><strong>A dipole pattern bias in marine heatwave simulation around East Asia</strong><br><small>G. Hong, C. Author</small></td>
+            <td><a href="https://doi.org/10.1000/example2" target="_blank">[Paper Link]</a> <em>Climate Dynamics</em></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-title">Conference Papers</h3>
+      <table class="pub-table">
+        <thead>
+          <tr>
+            <th style="width: 10%;">Year</th>
+            <th style="width: 65%;">Title & Authors</th>
+            <th style="width: 25%;">Conference / Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2025</td>
+            <td><strong>Operational forecast systems for coastal fisheries data</strong><br><small>G. Hong, D. Student</small></td>
+            <td><a href="https://example.com/conf1" target="_blank">[Proceeding]</a> <em>IEEE Ocean Conf</em></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
+    <!-- [Members] -->
     <div id="members" class="tab-content">
       <h2>Members</h2>
-      <div class="grid">
-        <div class="card"><h3>Professor</h3><p>홍길동 교수</p></div>
-        <div class="card"><h3>Researchers</h3><p>석/박사 과정 연구원</p></div>
+
+      <h3 class="section-title">Researchers</h3>
+      <div class="grid-4">
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="Researcher" style="height: 200px;" onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'">
+          <h4 style="font-size: 16px;">김연구 박사</h4>
+          <p style="font-size: 13px; color: #6c757d;">Postdoc / Ocean Modeling</p>
+          <p style="font-size: 13px; margin-top: 6px;">📧 kim@lab.ac.kr</p>
+        </div>
+      </div>
+
+      <h3 class="section-title">Students</h3>
+      <div class="grid-4">
+        <div class="card">
+          <img src="images/student1.jpg" alt="Student" style="height: 200px;" onerror="this.src='https://via.placeholder.com/200x200?text=Student'">
+          <h4 style="font-size: 16px;">이석사 학생</h4>
+          <p style="font-size: 13px; color: #6c757d;">M.S. Candidate</p>
+          <p style="font-size: 13px; margin-top: 6px;">📧 lee@lab.ac.kr</p>
+        </div>
+      </div>
+
+      <h3 class="section-title">Alumni</h3>
+      <div class="grid-4">
+        <div class="card">
+          <img src="images/alumni1.jpg" alt="Alumni" style="height: 200px;" onerror="this.src='https://via.placeholder.com/200x200?text=Alumni'">
+          <h4 style="font-size: 16px;">박졸업 (Ph.D. 2024)</h4>
+          <p style="font-size: 13px; color: #6c757d;">Current: KIOST Senior Researcher</p>
+        </div>
+      </div>
+
+      <h3 class="section-title">Externs & Visitors</h3>
+      <div class="grid-4">
+        <div class="card">
+          <img src="visitor1.jpg" alt="Visitor" style="height: 200px;" onerror="this.src='https://via.placeholder.com/200x200?text=Visitor/Extern'">
+          <h4 style="font-size: 16px;">Alex Smith</h4>
+          <p style="font-size: 13px; color: #6c757d;">IMO Visiting Scholar</p>
+        </div>
       </div>
     </div>
 
-    <div id="contact" class="tab-content">
-      <h2>Contact</h2>
-      <p style="margin-top: 10px;">📍 위치: ○○대학교 ○○관 123호</p>
-      <p>📧 이메일: lab@university.ac.kr</p>
-    </div>
-
+    <!-- [Gallery] -->
     <div id="gallery" class="tab-content">
       <h2>Gallery</h2>
-      <p style="margin-top: 10px;">연구실 활동 사진 및 학회 참가 기록입니다.</p>
+      <div class="grid-3">
+        <div class="card">
+          <img src="images/gallery1.jpg" alt="Gallery 1" style="height: 200px;" onerror="this.src='https://via.placeholder.com/300x200?text=Gallery+Image+1'">
+          <h4>2026 하계 학회 참석</h4>
+          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">해양 데이터 학회에서 최우수 논문상을 수상하였습니다.</p>
+        </div>
+        <div class="card">
+          <img src="images/gallery2.jpg" alt="Gallery 2" style="height: 200px;" onerror="this.src='https://via.placeholder.com/300x200?text=Gallery+Image+2'">
+          <h4>연구실 야유회</h4>
+          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">신입 연구원 환영회 및 단합 행사 사진입니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- [Contact] -->
+    <div id="contact" class="tab-content">
+      <h2>Contact Us</h2>
+      <div class="card" style="margin-top: 16px; max-width: 600px;">
+        <p style="margin-bottom: 12px;"><strong>📍 Location:</strong> 부산광역시 영도구 해양로 385, 해양관 305호</p>
+        <p style="margin-bottom: 12px;"><strong>📧 Email:</strong> contact@lab-domain.ac.kr</p>
+        <p style="margin-bottom: 12px;"><strong>📞 Phone:</strong> 051-123-4567</p>
+        <p><strong>🕒 Office Hours:</strong> Mon - Fri, 09:00 - 18:00</p>
+      </div>
     </div>
   </main>
 
+  <!-- 탭 전환 JavaScript -->
   <script>
     function openTab(evt, tabName) {
       const contents = document.getElementsByClassName("tab-content");
-      for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+      }
 
       const buttons = document.getElementsByClassName("nav-btn");
-      for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+      }
 
       document.getElementById(tabName).classList.add("active");
       evt.currentTarget.classList.add("active");
