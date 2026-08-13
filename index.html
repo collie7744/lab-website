@@ -75,7 +75,18 @@
     
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 20px; }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
-    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+    
+    /* [수정] Members 카드 한 줄에 4개 배치를 위한 그리드 설정 */
+    .grid-4 { 
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 16px; 
+      margin-top: 20px; 
+    }
+
+    /* 화면이 좁은 모바일 등에서는 1~2개씩 나오도록 반응형 예외 처리 */
+    @media (max-width: 992px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 576px) { .grid-4 { grid-template-columns: 1fr; } }
 
     .card { background: #fff; padding: 24px; border-radius: 10px; border: 1px solid #dee2e6; }
     .card img { width: 100%; border-radius: 8px; margin-bottom: 12px; object-fit: cover; }
@@ -109,6 +120,71 @@
     .pub-table a:hover { text-decoration: underline; }
 
     .section-title { margin-top: 24px; margin-bottom: 12px; font-size: 20px; color: #333; }
+
+    /* [신규] Research 세부 서브 탭 스타일 */
+    .sub-tab-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 10px;
+    }
+
+    .sub-tab-btn {
+      padding: 8px 16px;
+      border: 1px solid #ced4da;
+      background-color: #fff;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #495057;
+      transition: all 0.2s;
+    }
+
+    .sub-tab-btn.active {
+      background-color: #0d6efd;
+      color: #fff;
+      border-color: #0d6efd;
+    }
+
+    .sub-tab-content { display: none; }
+    .sub-tab-content.active { display: block; }
+
+    /* [신규] Gallery 이미지 슬라이더(캐러셀) 스타일 */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .slider-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .slider-container img.active { display: block; }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .slider-btn.prev { left: 10px; }
+    .slider-btn.next { right: 10px; }
+    .slider-btn:hover { background: rgba(0, 0, 0, 0.8); }
   </style>
 </head>
 <body>
@@ -126,9 +202,8 @@
     </div>
   </header>
 
-  <!-- 2. 대표 배너 이미지 (사용자 지정 이미지) -->
+  <!-- 2. 대표 배너 이미지 -->
   <div class="hero-banner">
-    <!-- 파일 경로를 실제 이미지 파일명으로 변경하세요 (예: hero-image.jpg) -->
     <img src="images/main-banner.jpg" alt="Lab Representative Banner Image" onerror="this.src='https://via.placeholder.com/1200x320?text=Lab+Representative+Banner+Image'">
   </div>
 
@@ -175,24 +250,41 @@
       </div>
     </div>
 
-    <!-- [Research] -->
+    <!-- [Research] - 하위 배너/서브 탭 적용 -->
     <div id="research" class="tab-content">
       <h2>Research Areas</h2>
-      <div class="grid-3">
+      
+      <!-- Research 전용 하위 서브 배너 버튼 그룹 -->
+      <div class="sub-tab-container">
+        <button class="sub-tab-btn active" onclick="openSubTab(event, 'res-climate')">Ocean Climate Change</button>
+        <button class="sub-tab-btn" onclick="openSubTab(event, 'res-fisheries')">Climate Driven Fisheries</button>
+        <button class="sub-tab-btn" onclick="openSubTab(event, 'res-modeling')">Ocean Modeling</button>
+      </div>
+
+      <!-- 서브 탭 1: Ocean Climate Change -->
+      <div id="res-climate" class="sub-tab-content active">
         <div class="card">
-          <img src="images/research1.jpg" alt="Ocean Climate Change" style="height: 180px;" onerror="this.src='https://via.placeholder.com/300x180?text=Ocean+Climate+Change'">
-          <h3>Ocean Climate Change</h3>
-          <p>Perform multifaceted analyses on the impacts of global warming and climate variability on ocean circulation and physical properties, while precisely tracking long-term dynamics and fluctuations in marine environments.</p>
+          <img src="images/research1.jpg" alt="Ocean Climate Change" style="max-height: 400px;" onerror="this.src='https://via.placeholder.com/800x400?text=Ocean+Climate+Change'">
+          <h3 style="margin-top: 12px;">Ocean Climate Change</h3>
+          <p style="margin-top: 8px;">Perform multifaceted analyses on the impacts of global warming and climate variability on ocean circulation and physical properties, while precisely tracking long-term dynamics and fluctuations in marine environments.</p>
         </div>
+      </div>
+
+      <!-- 서브 탭 2: Climate Driven Fisheries -->
+      <div id="res-fisheries" class="sub-tab-content">
         <div class="card">
-          <img src="images/research2.jpg" alt="Climate Driven Fisheries" style="height: 180px;" onerror="this.src='https://via.placeholder.com/300x180?text=Climate+Driven+Fisheries'">
-          <h3>Climate Driven Fisheries</h3>
-          <p>Interpret thermal and ecological migration patterns of fishery resources under climate change using data-driven modeling to research sustainable fishery management strategies.</p>
+          <img src="images/research2.jpg" alt="Climate Driven Fisheries" style="max-height: 400px;" onerror="this.src='https://via.placeholder.com/800x400?text=Climate+Driven+Fisheries'">
+          <h3 style="margin-top: 12px;">Climate Driven Fisheries</h3>
+          <p style="margin-top: 8px;">Interpret thermal and ecological migration patterns of fishery resources under climate change using data-driven modeling to research sustainable fishery management strategies.</p>
         </div>
+      </div>
+
+      <!-- 서브 탭 3: Ocean Modeling -->
+      <div id="res-modeling" class="sub-tab-content">
         <div class="card">
-          <img src="images/research3.jpg" alt="Ocean Modeling" style="height: 180px;" onerror="this.src='https://via.placeholder.com/300x180?text=Ocean+Modeling'">
-          <h3>Ocean Modeling</h3>
-          <p>Establish high-precision future ocean forecasting environments for key parameters, such as sea surface temperature (SST) and dissolved oxygen (DO), leveraging Earth System Models (e.g., CMIP6) and high-resolution numerical models.</p>
+          <img src="images/research3.jpg" alt="Ocean Modeling" style="max-height: 400px;" onerror="this.src='https://via.placeholder.com/800x400?text=Ocean+Modeling'">
+          <h3 style="margin-top: 12px;">Ocean Modeling</h3>
+          <p style="margin-top: 8px;">Establish high-precision future ocean forecasting environments for key parameters, such as sea surface temperature (SST) and dissolved oxygen (DO), leveraging Earth System Models (e.g., CMIP6) and high-resolution numerical models.</p>
         </div>
       </div>
     </div>
@@ -243,63 +335,139 @@
       </table>
     </div>
 
-    <!-- [Members] -->
+    <!-- [Members] - 한 줄 4명(grid-4) 및 항목별 2명 이상 세팅 -->
     <div id="members" class="tab-content">
       <h2>Members</h2>
 
+      <!-- 1. Researchers -->
       <h3 class="section-title">Researchers</h3>
       <div class="grid-4">
         <div class="card">
-          <img src="images/researcher1.jpg" alt="Researcher" style="height: 200px;" onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'">
-          <h4 style="font-size: 16px;">김연구 박사</h4>
-          <p style="font-size: 13px; color: #6c757d;">Postdoc / Ocean Modeling</p>
-          <p style="font-size: 13px; margin-top: 6px;">📧 kim@lab.ac.kr</p>
+          <img src="images/researcher1.jpg" alt="Won Keun Choi" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'">
+          <h4 style="font-size: 16px;">Won Keun Choi</h4>
+          <p style="font-size: 13px; margin-top: 4px;">📧 dnjsrms@kiost.ac.kr</p>
+          <p style="font-size: 13px; margin-top: 4px;"><a href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=229" target="_blank" style="color:#0d6efd;">[Profile Link]</a></p>
+        </div>
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="Minkyoung Bang" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'">
+          <h4 style="font-size: 16px;">Minkyoung Bang</h4>
+          <p style="font-size: 13px; margin-top: 4px;">📧 b910111@kiost.ac.kr</p>
+          <p style="font-size: 13px; margin-top: 4px;"><a href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=288" target="_blank" style="color:#0d6efd;">[Profile Link]</a></p>
+        </div>
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="Hee Seok Jung" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'">
+          <h4 style="font-size: 16px;">Hee Seok Jung</h4>
+          <p style="font-size: 13px; margin-top: 4px;">📧 jhs86@kiost.ac.kr</p>
+          <p style="font-size: 13px; margin-top: 4px;"><a href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=283" target="_blank" style="color:#0d6efd;">[Profile Link]</a></p>
+        </div>
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="Euihyun Jung" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'">
+          <h4 style="font-size: 16px;">Euihyun Jung</h4>
+          <p style="font-size: 13px; margin-top: 4px;">📧 ehjung@kiost.ac.kr</p>
+          <p style="font-size: 13px; margin-top: 4px;"><a href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=10618" target="_blank" style="color:#0d6efd;">[Profile Link]</a></p>
         </div>
       </div>
 
+      <!-- 2. Students -->
       <h3 class="section-title">Students</h3>
       <div class="grid-4">
         <div class="card">
-          <img src="images/student1.jpg" alt="Student" style="height: 200px;" onerror="this.src='https://via.placeholder.com/200x200?text=Student'">
-          <h4 style="font-size: 16px;">이석사 학생</h4>
-          <p style="font-size: 13px; color: #6c757d;">M.S. Candidate</p>
-          <p style="font-size: 13px; margin-top: 6px;">📧 lee@lab.ac.kr</p>
+          <img src="images/researcher1.jpg" alt="Hoyeon Lee" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Student'">
+          <h4 style="font-size: 16px;">Hoyeon Lee (M.S.)</h4>
+          <p style="font-size: 13px; margin-top: 4px;">📧 1209tim@kiost.ac.kr</p>
+        </div>
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="Jin Yeo" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Student'">
+          <h4 style="font-size: 16px;">Jin Yeo (M.S.)</h4>
+          <p style="font-size: 13px; margin-top: 4px;">📧 yeojin006@kiost.ac.kr</p>
         </div>
       </div>
 
+      <!-- 3. Alumni -->
       <h3 class="section-title">Alumni</h3>
       <div class="grid-4">
         <div class="card">
-          <img src="images/alumni1.jpg" alt="Alumni" style="height: 200px;" onerror="this.src='https://via.placeholder.com/200x200?text=Alumni'">
-          <h4 style="font-size: 16px;">박졸업 (Ph.D. 2024)</h4>
-          <p style="font-size: 13px; color: #6c757d;">Current: KIOST Senior Researcher</p>
+          <img src="images/researcher1.jpg" alt="Alumni 1" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Alumni'">
+          <h4 style="font-size: 16px;">박졸업 (Ph.D.)</h4>
+          <p style="font-size: 13px; color: #6c757d; margin-top: 4px;">Current: KIOST Senior Researcher</p>
+        </div>
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="Alumni 2" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Alumni'">
+          <h4 style="font-size: 16px;">김졸업 (M.S.)</h4>
+          <p style="font-size: 13px; color: #6c757d; margin-top: 4px;">Current: Marine Institute</p>
         </div>
       </div>
 
-      <h3 class="section-title">Externs & Visitors</h3>
+      <!-- 4. Externs (분리됨) -->
+      <h3 class="section-title">Externs</h3>
       <div class="grid-4">
         <div class="card">
-          <img src="visitor1.jpg" alt="Visitor" style="height: 200px;" onerror="this.src='https://via.placeholder.com/200x200?text=Visitor/Extern'">
+          <img src="images/researcher1.jpg" alt="Seoyoung Hwang" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Extern'">
+          <h4 style="font-size: 16px;">Seoyoung Hwang</h4>
+          <p style="font-size: 13px; margin-top: 4px;">📧 syhwang@kiost.ac.kr</p>
+        </div>
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="Extern Member" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Extern'">
+          <h4 style="font-size: 16px;">추가 예정 익스턴</h4>
+          <p style="font-size: 13px; margin-top: 4px;">📧 extern@kiost.ac.kr</p>
+        </div>
+      </div>
+
+      <!-- 5. Visitors (분리됨) -->
+      <h3 class="section-title">Visitors</h3>
+      <div class="grid-4">
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="Alex Smith" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Visitor'">
           <h4 style="font-size: 16px;">Alex Smith</h4>
-          <p style="font-size: 13px; color: #6c757d;">방문자 직책</p>
+          <p style="font-size: 13px; color: #6c757d; margin-top: 4px;">Visiting Scholar</p>
+        </div>
+        <div class="card">
+          <img src="images/researcher1.jpg" alt="John Doe" style="height: 180px;" onerror="this.src='https://via.placeholder.com/200x200?text=Visitor'">
+          <h4 style="font-size: 16px;">John Doe</h4>
+          <p style="font-size: 13px; color: #6c757d; margin-top: 4px;">Guest Researcher</p>
         </div>
       </div>
     </div>
 
-    <!-- [Gallery] -->
+    <!-- [Gallery] - 정해진 사진 순서 및 동일 날짜 좌우 슬라이드 기능 반영 -->
     <div id="gallery" class="tab-content">
       <h2>Gallery</h2>
       <div class="grid-3">
+        
+        <!-- 1. 연구진사진테크노파크코스모스2016-10-11.jpg -->
         <div class="card">
-          <img src="images/gallery1.jpg" alt="Gallery 1" style="height: 200px;" onerror="this.src='https://via.placeholder.com/300x200?text=Gallery+Image+1'">
-          <h4>사진 제목</h4>
-          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">사진 설명</p>
+          <img src="images/연구진사진테크노파크코스모스2016-10-11.jpg" alt="2016-10-11" style="height: 250px;" onerror="this.src='https://via.placeholder.com/300x200?text=2016-10-11'">
+          <h4>테크노파크 코스모스</h4>
+          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">2016-10-11</p>
         </div>
+
+        <!-- 2. 시화호2014-10-31.jpg -->
         <div class="card">
-          <img src="images/gallery2.jpg" alt="Gallery 2" style="height: 200px;" onerror="this.src='https://via.placeholder.com/300x200?text=Gallery+Image+2'">
-          <h4>사진 제목</h4>
-          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">사진 설명</p>
+          <img src="images/시화호2014-10-31.jpg" alt="2014-10-31" style="height: 250px;" onerror="this.src='https://via.placeholder.com/300x200?text=2014-10-31'">
+          <h4>시화호 현장 조사</h4>
+          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">2014-10-31</p>
         </div>
+
+        <!-- 3. 같은 날짜(2012-02-03) 찍힌 3장 사진 - 좌우 슬라이더 방식 -->
+        <div class="card">
+          <div class="slider-container" id="snow-slider">
+            <button class="slider-btn prev" onclick="moveSlide('snow-slider', -1)">&lt;</button>
+            <img src="images/1눈온날20120203.jpg" class="active" alt="눈온날 1" onerror="this.src='https://via.placeholder.com/300x200?text=1눈온날20120203'">
+            <img src="images/2눈온날20120203.jpg" alt="눈온날 2" onerror="this.src='https://via.placeholder.com/300x200?text=2눈온날20120203'">
+            <img src="images/3눈온날20120203.jpg" alt="눈온날 3" onerror="this.src='https://via.placeholder.com/300x200?text=3눈온날20120203'">
+            <button class="slider-btn next" onclick="moveSlide('snow-slider', 1)">&gt;</button>
+          </div>
+          <h4>눈 온 날 연구실 기록 (3장)</h4>
+          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">2012-02-03 (좌우 화살표 클릭)</p>
+        </div>
+
+        <!-- 4. 유장연구진회식2011-05-16.jpg -->
+        <div class="card">
+          <img src="images/유장연구진회식2011-05-16.jpg" alt="2011-05-16" style="height: 250px;" onerror="this.src='https://via.placeholder.com/300x200?text=2011-05-16'">
+          <h4>연구진 회식</h4>
+          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">2011-05-16</p>
+        </div>
+
       </div>
     </div>
 
@@ -315,8 +483,9 @@
     </div>
   </main>
 
-  <!-- 탭 전환 JavaScript -->
+  <!-- JavaScript 스크립트 -->
   <script>
+    // 1. 상단 메인 탭 전환 함수
     function openTab(evt, tabName) {
       const contents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < contents.length; i++) {
@@ -330,6 +499,46 @@
 
       document.getElementById(tabName).classList.add("active");
       evt.currentTarget.classList.add("active");
+    }
+
+    // 2. [신규] Research 내부 서브 탭 전환 함수
+    function openSubTab(evt, subTabName) {
+      const subContents = document.getElementsByClassName("sub-tab-content");
+      for (let i = 0; i < subContents.length; i++) {
+        subContents[i].classList.remove("active");
+      }
+
+      const subButtons = document.getElementsByClassName("sub-tab-btn");
+      for (let i = 0; i < subButtons.length; i++) {
+        subButtons[i].classList.remove("active");
+      }
+
+      document.getElementById(subTabName).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+
+    // 3. [신규] Gallery 좌우 슬라이드(캐러셀) 제어 함수
+    function moveSlide(containerId, direction) {
+      const container = document.getElementById(containerId);
+      const images = container.getElementsByTagName('img');
+      let currentIndex = -1;
+
+      // 현재 보이고 있는 이미지의 인덱스 찾기
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].classList.contains('active')) {
+          currentIndex = i;
+          images[i].classList.remove('active');
+          break;
+        }
+      }
+
+      // 다음 인덱스 계산 (처음이나 끝에 도달하면 순환)
+      let nextIndex = currentIndex + direction;
+      if (nextIndex >= images.length) nextIndex = 0;
+      if (nextIndex < 0) nextIndex = images.length - 1;
+
+      // 다음 이미지 활성화
+      images[nextIndex].classList.add('active');
     }
   </script>
 </body>
