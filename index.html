@@ -3,523 +3,2013 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ocean Data Science Lab</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-    body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
 
-    /* 1. 상단 고정 네비게이션 배너 */
+  <title>Ocean Data Science Lab</title>
+
+  <style>
+    /* =========================================================
+       Base
+    ========================================================= */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+    }
+
+
+    /* =========================================================
+       Header / Navigation
+    ========================================================= */
     header {
       position: sticky;
       top: 0;
-      background-color: #ffffff;
-      border-bottom: 1px solid #e9ecef;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
       z-index: 1000;
+
+      background-color: #fff;
+      border-bottom: 1px solid #e9ecef;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
     }
 
     .nav-container {
       max-width: 1200px;
       margin: 0 auto;
+      padding: 12px 20px;
+
       display: flex;
       gap: 8px;
-      padding: 12px 20px;
+
       overflow-x: auto;
     }
 
     .nav-btn {
+      padding: 10px 18px;
+
       background: none;
       border: none;
-      padding: 10px 18px;
+      border-radius: 6px;
+
+      color: #6c757d;
       font-size: 15px;
       font-weight: 600;
-      color: #6c757d;
+
       cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.2s ease;
       white-space: nowrap;
+
+      transition: all 0.2s ease;
     }
 
-    .nav-btn:hover { background-color: #f1f3f5; color: #212529; }
-    .nav-btn.active { color: #0d6efd; background-color: #e7f1ff; }
+    .nav-btn:hover {
+      background-color: #f1f3f5;
+      color: #212529;
+    }
 
-    /* 2. 대표 이미지 배너 영역 (수정: 높이를 기존 320px의 2/3인 213px로 조정 및 비율 유지) */
+    .nav-btn.active {
+      background-color: #e7f1ff;
+      color: #0d6efd;
+    }
+
+
+    /* =========================================================
+       Hero Banner
+    ========================================================= */
     .hero-banner {
       width: 100%;
       max-width: 1200px;
-      margin: 20px auto 0 auto;
+
+      margin: 20px auto 0;
       padding: 0 20px;
     }
 
     .hero-banner img {
       width: 100%;
-      height: 213px; /* 320px * (2/3) ≈ 213px */
-      object-fit: cover; /* 비율 유지하며 영역 채움 */
+      height: 213px;
+
+      object-fit: cover;
       object-position: center;
+
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
-    /* 3. 메인 콘텐츠 영역 */
-    main { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-    .tab-content { display: none; animation: fadeIn 0.3s ease; }
-    .tab-content.active { display: block; }
+
+    /* =========================================================
+       Main Content / Tabs
+    ========================================================= */
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* 레이아웃 & 카드 공통 스타일 */
-    h2 { font-size: 24px; margin-bottom: 16px; color: #111; border-bottom: 2px solid #0d6efd; display: inline-block; padding-bottom: 4px; }
-    h3 { font-size: 18px; margin-bottom: 8px; color: #0d6efd; }
-    
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 20px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
-    
-    .grid-4 { 
-      display: grid; 
-      grid-template-columns: repeat(4, 1fr); 
-      gap: 16px; 
-      margin-top: 20px; 
+
+    /* =========================================================
+       Typography
+    ========================================================= */
+    h2 {
+      display: inline-block;
+
+      margin-bottom: 16px;
+      padding-bottom: 4px;
+
+      color: #111;
+      font-size: 24px;
+
+      border-bottom: 2px solid #0d6efd;
     }
 
-    /* 반응형 스타일 */
-    @media (max-width: 992px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 576px) { .grid-4 { grid-template-columns: 1fr; } }
+    h3 {
+      margin-bottom: 8px;
+      color: #0d6efd;
+      font-size: 18px;
+    }
 
-    .card { background: #fff; padding: 24px; border-radius: 10px; border: 1px solid #dee2e6; }
-    .card img { width: 100%; border-radius: 8px; margin-bottom: 12px; }
+    .section-title {
+      margin-top: 24px;
+      margin-bottom: 12px;
 
-    /* 프로필 레이아웃 */
-    .profile-flex { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
-    .profile-img { width: 220px; height: 260px; object-fit: cover; border-radius: 10px; }
-    .profile-info { flex: 1; min-width: 280px; }
+      color: #333;
+      font-size: 20px;
+    }
 
-    /* 표(Table) 스타일 */
+
+    /* =========================================================
+       Grid
+    ========================================================= */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(320px, 1fr)
+      );
+
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(260px, 1fr)
+      );
+
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+
+    /* =========================================================
+       Card
+    ========================================================= */
+    .card {
+      padding: 24px;
+
+      background: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+    }
+
+    .card img {
+      width: 100%;
+      margin-bottom: 12px;
+
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+
+    /* =========================================================
+       Profile
+    ========================================================= */
+    .profile-flex {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .profile-img {
+      width: 220px;
+      height: 260px;
+
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .profile-info {
+      flex: 1;
+      min-width: 280px;
+    }
+
+
+    /* =========================================================
+       Publications Table
+    ========================================================= */
+    .pub-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
     .pub-table {
       width: 100%;
-      border-collapse: collapse;
       margin-top: 16px;
       margin-bottom: 16px;
-      background: #ffffff;
+
+      background-color: #fff;
+
+      border-collapse: collapse;
       border-radius: 8px;
+
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
-    .pub-table th, .pub-table td {
+    .pub-table th,
+    .pub-table td {
       padding: 14px 16px;
+
       text-align: left;
+      vertical-align: top;
+
       border-bottom: 1px solid #dee2e6;
     }
 
-    .pub-table th { background-color: #f1f3f5; font-weight: 600; color: #495057; }
-    .pub-table tr:hover { background-color: #f8f9fa; }
-    .pub-table a { color: #0d6efd; text-decoration: none; font-weight: 500; }
-    .pub-table a:hover { text-decoration: underline; }
+    .pub-table th {
+      background-color: #f1f3f5;
+      color: #495057;
+      font-weight: 600;
+    }
 
-    .more-btn-container { text-align: right; margin-bottom: 32px; }
+    .pub-table tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .pub-table a {
+      color: #0d6efd;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .pub-table a:hover {
+      text-decoration: underline;
+    }
+
+
+    /* =========================================================
+       More Button
+    ========================================================= */
+    .more-btn-container {
+      margin-bottom: 32px;
+      text-align: right;
+    }
+
     .more-btn {
       display: inline-block;
+
       padding: 8px 16px;
+
       background-color: #0d6efd;
-      color: #ffffff;
-      text-decoration: none;
+      color: #fff;
+
+      border-radius: 6px;
+
       font-size: 14px;
       font-weight: 600;
-      border-radius: 6px;
+
+      text-decoration: none;
+
       transition: background-color 0.2s ease;
     }
-    .more-btn:hover { background-color: #0b5ed7; color: #ffffff; text-decoration: none; }
 
-    .section-title { margin-top: 24px; margin-bottom: 12px; font-size: 20px; color: #333; }
+    .more-btn:hover {
+      background-color: #0b5ed7;
+      color: #fff;
+      text-decoration: none;
+    }
 
-    /* Research 서브 탭 스타일 */
+
+    /* =========================================================
+       Research Sub Tabs
+    ========================================================= */
     .sub-tab-container {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
+
       margin-bottom: 20px;
-      border-bottom: 1px solid #dee2e6;
       padding-bottom: 10px;
+
+      border-bottom: 1px solid #dee2e6;
     }
 
     .sub-tab-btn {
       padding: 8px 16px;
-      border: 1px solid #ced4da;
+
       background-color: #fff;
+      border: 1px solid #ced4da;
       border-radius: 20px;
-      cursor: pointer;
-      font-weight: 600;
+
       color: #495057;
-      transition: all 0.2s;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: all 0.2s ease;
+    }
+
+    .sub-tab-btn:hover {
+      background-color: #f1f3f5;
     }
 
     .sub-tab-btn.active {
       background-color: #0d6efd;
-      color: #fff;
       border-color: #0d6efd;
+      color: #fff;
     }
 
-    .sub-tab-content { display: none; }
-    .sub-tab-content.active { display: block; }
+    .sub-tab-content {
+      display: none;
+    }
 
-    /* 수정: Research 카드 내 이미지 비율 원본 보존 설정 (object-fit: contain) */
+    .sub-tab-content.active {
+      display: block;
+    }
+
     .sub-tab-content .card img {
       width: 100%;
       height: auto;
       max-height: 450px;
-      object-fit: contain; /* 원본 사진의 비율을 유지 */
-      background-color: #f1f3f5; /* 빈 공간 배경 처리 */
+
+      object-fit: contain;
+
+      background-color: #f1f3f5;
     }
 
-    /* Gallery 캐러셀 스타일 */
+
+    /* =========================================================
+       Gallery Slider
+    ========================================================= */
     .slider-container {
       position: relative;
+
       width: 100%;
       height: 300px;
+
+      margin-bottom: 12px;
+
       overflow: hidden;
       border-radius: 8px;
-      margin-bottom: 12px;
-      background-color: #e9ecef;
     }
 
     .slider-container img {
+      display: none;
+
       width: 100%;
       height: 100%;
+
+      margin: 0;
+
       object-fit: cover;
-      display: none; /* 기본 숨김 */
     }
 
-    .slider-container img.active { display: block; } /* 활성화된 이미지만 표시 */
+    .slider-container img.active {
+      display: block;
+    }
 
-    /* 수정: 화살표 버튼이 이미지 위에 노출되도록 z-index 부여 */
     .slider-btn {
       position: absolute;
       top: 50%;
+
+      padding: 8px 12px;
+
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
+
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+
       border: none;
-      padding: 10px 14px;
-      cursor: pointer;
       border-radius: 4px;
+
       font-weight: bold;
-      z-index: 10; /* 버튼이 맨 앞에 위치하도록 설정 */
+
+      cursor: pointer;
+
+      z-index: 2;
     }
 
-    .slider-btn.prev { left: 10px; }
-    .slider-btn.next { right: 10px; }
-    .slider-btn:hover { background: rgba(0, 0, 0, 0.9); }
+    .slider-btn.prev {
+      left: 10px;
+    }
 
-    /* Contact 구글 지도 스타일 */
+    .slider-btn.next {
+      right: 10px;
+    }
+
+    .slider-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+
+    /* =========================================================
+       Member Cards
+    ========================================================= */
+    .member-card {
+      text-align: center;
+    }
+
+    .member-photo {
+      width: 100px;
+      height: 100px;
+
+      margin: 0 auto 8px;
+
+      object-fit: cover;
+
+      border-radius: 50%;
+    }
+
+    .member-name {
+      font-size: 16px;
+    }
+
+    .member-email,
+    .member-link,
+    .member-position {
+      margin-top: 4px;
+      font-size: 13px;
+    }
+
+    .member-position {
+      color: #6c757d;
+    }
+
+    .member-link a {
+      color: #0d6efd;
+      text-decoration: none;
+    }
+
+    .member-link a:hover {
+      text-decoration: underline;
+    }
+
+
+    /* =========================================================
+       Contact / Map
+    ========================================================= */
+    .contact-item {
+      margin-bottom: 12px;
+    }
+
+    .contact-hours {
+      margin-bottom: 16px;
+    }
+
     .map-container {
       width: 100%;
-      height: 300px;
-      margin-top: 16px;
-      border-radius: 8px;
+      height: 450px;
+
+      margin-top: 20px;
+
       overflow: hidden;
-      border: 1px solid #dee2e6;
+
+      border-radius: 8px;
     }
 
     .map-container iframe {
       width: 100%;
       height: 100%;
+
       border: 0;
+    }
+
+
+    /* =========================================================
+       Responsive
+    ========================================================= */
+    @media (max-width: 992px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-banner img {
+        height: 180px;
+      }
+
+      .profile-img {
+        width: 180px;
+        height: 220px;
+      }
+
+      .pub-table {
+        min-width: 700px;
+      }
+
+      .map-container {
+        height: 350px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-banner img {
+        height: 150px;
+      }
+
+      .profile-img {
+        width: 100%;
+        height: 280px;
+      }
+
+      .profile-info {
+        min-width: 100%;
+      }
+
+      .nav-container {
+        padding: 10px;
+      }
+
+      .nav-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .map-container {
+        height: 300px;
+      }
     }
   </style>
 </head>
+
+
 <body>
 
-  <!-- 1. 상단 고정 네비게이션 배너 -->
+  <!-- =========================================================
+       Header / Navigation
+  ========================================================== -->
   <header>
-    <div class="nav-container">
-      <button class="nav-btn active" onclick="openTab(event, 'home')">Home</button>
-      <button class="nav-btn" onclick="openTab(event, 'professor')">Professor</button>
-      <button class="nav-btn" onclick="openTab(event, 'research')">Research</button>
-      <button class="nav-btn" onclick="openTab(event, 'publications')">Publications</button>
-      <button class="nav-btn" onclick="openTab(event, 'members')">Members</button>
-      <button class="nav-btn" onclick="openTab(event, 'gallery')">Gallery</button>
-      <button class="nav-btn" onclick="openTab(event, 'contact')">Contact</button>
-    </div>
+    <nav class="nav-container" aria-label="Main navigation">
+      <button
+        type="button"
+        class="nav-btn active"
+        onclick="openTab(event, 'home')"
+      >
+        Home
+      </button>
+
+      <button
+        type="button"
+        class="nav-btn"
+        onclick="openTab(event, 'professor')"
+      >
+        Professor
+      </button>
+
+      <button
+        type="button"
+        class="nav-btn"
+        onclick="openTab(event, 'research')"
+      >
+        Research
+      </button>
+
+      <button
+        type="button"
+        class="nav-btn"
+        onclick="openTab(event, 'publications')"
+      >
+        Publications
+      </button>
+
+      <button
+        type="button"
+        class="nav-btn"
+        onclick="openTab(event, 'members')"
+      >
+        Members
+      </button>
+
+      <button
+        type="button"
+        class="nav-btn"
+        onclick="openTab(event, 'gallery')"
+      >
+        Gallery
+      </button>
+
+      <button
+        type="button"
+        class="nav-btn"
+        onclick="openTab(event, 'contact')"
+      >
+        Contact
+      </button>
+    </nav>
   </header>
 
-  <!-- 2. 대표 배너 이미지 (높이 213px 적용) -->
+
+  <!-- =========================================================
+       Hero Banner
+  ========================================================== -->
   <div class="hero-banner">
-    <img src="images/main-banner.jpg" alt="Lab Representative Banner Image" onerror="this.src='https://via.placeholder.com/1200x213?text=Lab+Representative+Banner+Image'">
+    <img
+      src="images/oceanopia 로고.jpg"
+      alt="Ocean Data Science Lab Representative Banner"
+      onerror="this.src='https://via.placeholder.com/1200x320?text=Lab+Representative+Banner+Image'"
+    >
   </div>
 
-  <!-- 3. 메인 콘텐츠 영역 -->
+
+  <!-- =========================================================
+       Main Content
+  ========================================================== -->
   <main>
-    <!-- [Home] -->
-    <div id="home" class="tab-content active">
+
+    <!-- =======================================================
+         Home
+    ======================================================== -->
+    <section id="home" class="tab-content active">
       <h2>Home</h2>
-      <div class="card" style="margin-top: 16px;">
+
+      <div class="card">
         <div class="profile-flex">
-          <img src="images/lab-main.jpg" alt="Lab Photo" class="profile-img" onerror="this.src='https://via.placeholder.com/220x260?text=Lab+Main+Photo'">
+
+          <img
+            src="images/lab-main.jpg"
+            alt="Ocean Data Science Lab"
+            class="profile-img"
+            onerror="this.src='https://via.placeholder.com/220x260?text=Lab+Main+Photo'"
+          >
+
           <div class="profile-info">
             <h3>Oceanopia 해양상층역학연구실</h3>
+
             <p style="margin-top: 10px;">
-              Our lab studies the physical characteristics of the surrounding seas of Korea and the global ocean, 
-              utilizing in-situ observations and numerical models to reveal the dynamics associated with ocean circulation and climate change, 
-              and conducts research to develop and to improve prediction skills for the future changes in the marine environment and climate.</p>
+              Our lab studies the physical characteristics of the surrounding
+              seas of Korea and the global ocean, utilizing in-situ observations
+              and numerical models to reveal the dynamics associated with ocean
+              circulation and climate change, and conducts research to develop
+              and to improve prediction skills for the future changes in the
+              marine environment and climate.
+            </p>
           </div>
+
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- [Professor] -->
-    <div id="professor" class="tab-content">
+
+    <!-- =======================================================
+         Professor
+    ======================================================== -->
+    <section id="professor" class="tab-content">
       <h2>Professor</h2>
-      <div class="card" style="margin-top: 16px;">
+
+      <div class="card">
         <div class="profile-flex">
-          <img src="images/professor.jpg" alt="Professor Photo" class="profile-img" onerror="this.src='https://via.placeholder.com/220x260?text=Professor+Photo'">
+
+          <img
+            src="images/professor.jpg"
+            alt="Professor Chan Joo Jang"
+            class="profile-img"
+            onerror="this.src='https://via.placeholder.com/220x260?text=Professor+Photo'"
+          >
+
           <div class="profile-info">
             <h3>Chan Joo Jang</h3>
-            <p style="margin-top: 12px;"><strong>Office:</strong> KIOST, 385 Haeyang-ro, Yeongdo-gu, Busan, South Korea</p>
-            <p><strong>Phone:</strong> 051-664-3117</p>
-            <p><strong>Email:</strong> cjjang@kiost.ac.kr</p>
-            
-            <h4 style="margin-top: 20px; margin-bottom: 8px;">Experience</h4>
+
+            <p style="margin-top: 12px;">
+              <strong>Office:</strong>
+              KIOST, 385 Haeyang-ro, Yeongdo-gu, Busan, South Korea
+            </p>
+
+            <p>
+              <strong>Phone:</strong>
+              051-664-3117
+            </p>
+
+            <p>
+              <strong>Email:</strong>
+              cjjang@kiost.ac.kr
+            </p>
+
+            <h4 style="margin-top: 20px; margin-bottom: 8px;">
+              Education
+            </h4>
+
             <ul style="padding-left: 20px;">
-              <li>2015 - Present: Professor, Korea Institute of Ocean Science and Technology</li>
+              <li>
+                <strong>2001:</strong>
+                Ph.D. in Atmospheric Science, Yonsei University, Seoul, Korea
+              </li>
+
+              <li>
+                <strong>1995:</strong>
+                M.S. in Oceanography, Seoul National University, Seoul, Korea
+              </li>
+
+              <li>
+                <strong>1990:</strong>
+                B.S. in Oceanography, Seoul National University, Seoul, Korea
+              </li>
+            </ul>
+
+            <h4 style="margin-top: 20px; margin-bottom: 8px;">
+              Experience
+            </h4>
+
+            <ul style="padding-left: 20px;">
+              <li>
+                <strong>Mar. 2011 - Present:</strong>
+                Principal Research Scientist, Ocean Circulation Research Center,
+                Korea Institute of Ocean Science &amp; Technology (KIOST)
+              </li>
+
+              <li>
+                <strong>Sep. 2010 - Present:</strong>
+                Physical Oceanography and Climate Scientific Committee (POC)
+                Member, PICES
+              </li>
+
+              <li>
+                <strong>Oct. 2011 - Present:</strong>
+                Co-Chair, Working Group 29 on Regional Climate Modeling, PICES
+              </li>
+
+              <li>
+                <strong>Apr. 2001 - Feb. 2011:</strong>
+                Senior Research Scientist, Ocean Circulation &amp; Climate
+                Research Division, Korea Ocean Research and Development
+                Institute (KORDI)
+              </li>
+
+              <li>
+                <strong>Nov. 2006 - Oct. 2008:</strong>
+                Assistant Research Scientist, Dept. of Oceanography,
+                Texas A&amp;M University, USA
+              </li>
+
+              <li>
+                <strong>Jul. 2000 - Sep. 2000:</strong>
+                Visiting Scientist, Dept. of Oceanography,
+                Naval Postgraduate School, Monterey, USA
+              </li>
+
+              <li>
+                <strong>Jul. 1999 - Feb. 2000:</strong>
+                Research Scientist, Korea Ocean Research and Development
+                Institute (KORDI)
+              </li>
+
+              <li>
+                <strong>
+                  Mar. 1996 - Aug. 1996, Mar. 1999 - Aug. 1999:
+                </strong>
+                Computer System Administrator, Dept. of Atmospheric Science,
+                Yonsei University
+              </li>
+
+              <li>
+                <strong>Jun. 1995 - 2001:</strong>
+                Assistant Scientist, Global Environment Laboratory,
+                Yonsei University
+              </li>
+
+              <li>
+                <strong>Mar. 1996 - 2001:</strong>
+                Graduate Research Assistant, Dept. of Atmospheric Science,
+                Yonsei University
+              </li>
+
+              <li>
+                <strong>
+                  Mar. 1990 - Jan. 1991, Oct. 1992 - Jan. 1994:
+                </strong>
+                Graduate Research Assistant, Dept. of Oceanography,
+                Seoul National University
+              </li>
             </ul>
           </div>
+
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- [Research] (수정: 원본 사진 비율 유지 적용) -->
-    <div id="research" class="tab-content">
+
+    <!-- =======================================================
+         Research
+    ======================================================== -->
+    <section id="research" class="tab-content">
       <h2>Research Areas</h2>
-      
+
       <div class="sub-tab-container">
-        <button class="sub-tab-btn active" onclick="openSubTab(event, 'res-climate')">Ocean Climate Change</button>
-        <button class="sub-tab-btn" onclick="openSubTab(event, 'res-fisheries')">Climate Driven Fisheries</button>
-        <button class="sub-tab-btn" onclick="openSubTab(event, 'res-modeling')">Ocean Modeling</button>
+        <button
+          type="button"
+          class="sub-tab-btn active"
+          onclick="openSubTab(event, 'res-climate')"
+        >
+          Ocean Climate Change
+        </button>
+
+        <button
+          type="button"
+          class="sub-tab-btn"
+          onclick="openSubTab(event, 'res-fisheries')"
+        >
+          Climate Driven Fisheries
+        </button>
+
+        <button
+          type="button"
+          class="sub-tab-btn"
+          onclick="openSubTab(event, 'res-modeling')"
+        >
+          Ocean Modeling
+        </button>
       </div>
 
+
+      <!-- Ocean Climate Change -->
       <div id="res-climate" class="sub-tab-content active">
         <div class="card">
-          <img src="images/research1.jpg" alt="Ocean Climate Change" onerror="this.src='https://via.placeholder.com/800x400?text=Ocean+Climate+Change'">
-          <h3 style="margin-top: 12px;">Ocean Climate Change</h3>
-          <p style="margin-top: 8px;">Perform multifaceted analyses on the impacts of global warming and climate variability on ocean circulation and physical properties, while precisely tracking long-term dynamics and fluctuations in marine environments.</p>
+          <img
+            src="images/research1.jpg"
+            alt="Ocean Climate Change"
+            onerror="this.src='https://via.placeholder.com/800x400?text=Ocean+Climate+Change'"
+          >
+
+          <h3 style="margin-top: 12px;">
+            Ocean Climate Change
+          </h3>
+
+          <p style="margin-top: 8px;">
+            Perform multifaceted analyses on the impacts of global warming and
+            climate variability on ocean circulation and physical properties,
+            while precisely tracking long-term dynamics and fluctuations in
+            marine environments.
+          </p>
         </div>
       </div>
 
+
+      <!-- Climate Driven Fisheries -->
       <div id="res-fisheries" class="sub-tab-content">
         <div class="card">
-          <img src="images/research2.jpg" alt="Climate Driven Fisheries" onerror="this.src='https://via.placeholder.com/800x400?text=Climate+Driven+Fisheries'">
-          <h3 style="margin-top: 12px;">Climate Driven Fisheries</h3>
-          <p style="margin-top: 8px;">Interpret thermal and ecological migration patterns of fishery resources under climate change using data-driven modeling to research sustainable fishery management strategies.</p>
+          <img
+            src="images/research2.jpg"
+            alt="Climate Driven Fisheries"
+            onerror="this.src='https://via.placeholder.com/800x400?text=Climate+Driven+Fisheries'"
+          >
+
+          <h3 style="margin-top: 12px;">
+            Climate Driven Fisheries
+          </h3>
+
+          <p style="margin-top: 8px;">
+            Interpret thermal and ecological migration patterns of fishery
+            resources under climate change using data-driven modeling to
+            research sustainable fishery management strategies.
+          </p>
         </div>
       </div>
 
+
+      <!-- Ocean Modeling -->
       <div id="res-modeling" class="sub-tab-content">
         <div class="card">
-          <img src="images/ocean_modeling.png" alt="Ocean Modeling" onerror="this.src='https://via.placeholder.com/800x400?text=Ocean+Modeling'">
-          <h3 style="margin-top: 12px;">Ocean Modeling</h3>
-          <p style="margin-top: 8px;">We conduct ocean modeling research using the Regional Ocean Modeling System (ROMS). By dynamically downscaling outputs from global climate models, we simulate the Korea waters at high resolution and analyze variations in key oceanographic variables, including temperature, salinity, and currents. Based on these results, we investigate long-term changes in the marine environment driven by climate change and develop medium-range ocean forecasts for the Korea waters.</p>
+          <img
+            src="images/ocean_modeling.png"
+            alt="Ocean Modeling"
+            onerror="this.src='https://via.placeholder.com/800x400?text=Ocean+Modeling'"
+          >
+
+          <h3 style="margin-top: 12px;">
+            Ocean Modeling
+          </h3>
+
+          <p style="margin-top: 8px;">
+            We conduct ocean modeling research using the Regional Ocean
+            Modeling System (ROMS). By dynamically downscaling outputs from
+            global climate models, we simulate the Korea waters at high
+            resolution and analyze variations in key oceanographic variables,
+            including temperature, salinity, and currents. Based on these
+            results, we investigate long-term changes in the marine environment
+            driven by climate change and develop medium-range ocean forecasts
+            for the Korea waters.
+          </p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- [Publications] -->
-    <div id="publications" class="tab-content">
+
+    <!-- =======================================================
+         Publications
+    ======================================================== -->
+    <section id="publications" class="tab-content">
       <h2>Publications</h2>
 
-      <h3 class="section-title">Journal Articles</h3>
-      <table class="pub-table">
-        <thead>
-          <tr>
-            <th style="width: 10%;">Year</th>
-            <th style="width: 65%;">Title & Authors</th>
-            <th style="width: 25%;">Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2026</td>
-            <td><strong>An operational forecast system for the intrusion of the Changjiang River plume into the northern East China Sea</strong><br><small>Hong, Ji-Seok; Moon, Jae-Hong; Lee, Joon-Ho; Kim, Subin; Kim, Taekyun; Jang, Chan Joo; Jung, Hee Seok</small></td>
-            <td><a href="https://doi.org/10.1080/1755876X.2026.2634417" target="_blank">[Paper Link]</a></td>
-          </tr>
-          <tr>
-            <td>2025</td>
-            <td><strong>A dipole pattern bias in marine heatwave simulation around East Asia</strong><br><small>G. Hong, C. Author</small></td>
-            <td><a href="https://doi.org/10.1088/1748-9326/ae0806" target="_blank">[Paper Link]</a></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="more-btn-container">
-        <a href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=284&type=article" target="_blank" class="more-btn">Find Out More &rarr;</a>
+
+      <!-- Journal Articles -->
+      <h3 class="section-title">
+        Journal Articles
+      </h3>
+
+      <div class="pub-table-wrapper">
+        <table class="pub-table">
+          <thead>
+            <tr>
+              <th style="width: 10%;">Year</th>
+              <th style="width: 90%;">Title &amp; Authors</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>2026</td>
+              <td>
+                Hong, J. S., J. H. Moon, J. H. Lee, S. Kim, T. Kim,
+                C. J. Jang, and H. S. Jung, An operational forecast system
+                for the intrusion of the Changjiang River plume into the
+                northern East China Sea,
+                <i>Journal of Operational Oceanography</i>, 19.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2025</td>
+              <td>
+                Choi, W., H. S. Jung, M. Bang, Z. Song, N. Kang, and C. J. Jang,
+                A dipole pattern bias in marine heatwave intensity in the
+                Kuroshio Extension simulated by the CMIP6 models: a role of
+                northward shift of the Kuroshio Current,
+                <i>Environmental Research Letters</i>, 20.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2025</td>
+              <td>
+                Wang Y, Y. Song, Y. Bao, C. J. Jang, and Z. Song,
+                Assessment of the marine heatwaves prediction performance of
+                the short-term climate prediction system FIO-CPS v2.0,
+                <i>Weather and Climate Extremes</i>, 48.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2024</td>
+              <td>
+                Bang M, D Sohn, J Kim, W Choi, EL Hazen, S Kang, S Kim,
+                and C. J. Jang, Projected changes in seasonal potential
+                distribution of chub mackerel Scomber japonicus under continued
+                ocean warming in Korean waters,
+                <i>Mar Ecol Prog Ser</i>, 751:133-152.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2024</td>
+              <td>
+                Kim M, W. Choi, C. J. Jang, and J. H. Kang,
+                Hidden underlying mechanisms for changes in mesozooplankton
+                communities: Transport and eddy driven changes,
+                <i>Science of the Total Environment</i>, 946.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2024</td>
+              <td>
+                Azminuddin F, C. J. Jang, R. D. Susanto, and S. Mubarrok,
+                Unraveling the Extensive Impact of Subthermocline Eddies on
+                the Western Pacific Undercurrent System,
+                <i>Geophysical Research Letters</i>, 51(8).
+              </td>
+            </tr>
+
+            <tr>
+              <td>2024</td>
+              <td>
+                Ahmad B, J. Yoo, C. J. Jang, M. Kwon, and H.-W. Kang,
+                Near-Future Projection of Sea Surface Winds in Northwest
+                Pacific Ocean Based on a CMIP6 Multi-Model Ensemble,
+                <i>Atmosphere</i>, 15(3).
+              </td>
+            </tr>
+
+            <tr>
+              <td>2023</td>
+              <td>
+                Mubarrok, S., F. Azminuddin, and C. J. Jang,
+                Assessment of thermocline depth bias in the
+                Seychelles-Chagos Thermocline Ridge of the Southwestern Indian
+                Ocean simulated by the CMIP6 models,
+                <i>Frontiers in Marine Science</i>, 10.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2023</td>
+              <td>
+                Oh H., G.-U. Kim, Y. S. Kim, J.-H. Kim, C. J. Jang,
+                Y. Min, H. J. Jun, and J.-Y. Jeong,
+                Classification and Causes of East Asian Marine Heatwaves
+                during Boreal Summer,
+                <i>Journal of Climate</i>, 36(5).
+              </td>
+            </tr>
+
+            <tr>
+              <td>2023</td>
+              <td>
+                Yun S, N. Kang, and C. J. Jang,
+                Narrowing region for tropical convections in the western
+                North Pacific,
+                <i>Scientific Reports</i>, 13(1).
+              </td>
+            </tr>
+
+            <tr>
+              <td>2022</td>
+              <td>
+                Choi W., M. Bang, Y. Joh, Y. G, Ham, N. Kang, and C. J. Jang,
+                Characteristics and Mechanisms of Marine Heatwaves in the East
+                Asian Marginal Seas: Regional and Seasonal Differences,
+                <i>Remote Sensing</i>, 14(15).
+              </td>
+            </tr>
+
+            <tr>
+              <td>2022</td>
+              <td>
+                Mubarrok S., C. J. Jang,
+                Annual Maximum Precipitation in Indonesia and Its Association
+                to Climate Teleconnection Patterns: An Extreme Value Analysis,
+                <i>Scientific Online Letters on the Atmosphere</i>, 18.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2022</td>
+              <td>
+                Bang M., D. Sohn, J. J. Kim, W. Choi, C. J. Jang,
+                and C. Kim, Future changes in the seasonal habitat suitability
+                for anchovy (Engraulis japonicus) in Korean waters projected
+                by a maximum entropy model,
+                <i>Frontiers in Marine Science</i>, 9.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2021</td>
+              <td>
+                Qiu Z, F. Qiao, C. J. Jang, L. Zhang, Z. Song,
+                Evaluation and projection of global marine heatwaves based on
+                CMIP6 models,
+                <i>Deep-Sea Research Part II: Topical Studies in Oceanography</i>,
+                194.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2021</td>
+              <td>
+                Drenkard E. J. et al,
+                Next-generation regional ocean projections for living marine
+                resource management in a changing climate,
+                <i>ICES Journal of Marine Science</i>,
+                78(6): 1969-1987.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2021</td>
+              <td>
+                Azminuddin F., D. Jeon, YH Kim, C. J. Jang, J. H. Park,
+                A Newly Observed Deep Countercurrent in the Subtropical
+                Northwest Pacific,
+                <i>Journal of Geophysical Research-Oceans</i>, 126(7).
+              </td>
+            </tr>
+
+            <tr>
+              <td>2020</td>
+              <td>
+                Jang. C. J., K. H. Kim, H. Jung, K. Do, J. Yoo, Y. S. Kim,
+                and H. S. Lim, Future Changes in Significant Wave Heights in
+                the East/Japan Sea,
+                <i>Journal of Coastal Research</i>, 95(1): 1443-1448.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2018</td>
+              <td>
+                Jang. C. J., W. Choi, H.-J Shin, and C.-H. Kim,
+                Future Changes in the Sea Surface Wind over the East Asian
+                Marginal Seas Projected by Regional Climate Models,
+                In: Shim, J.-S.; Chun, I., and Lim, H.S. (eds.),
+                <i>Proceedings from the International Coastal Symposium
+                (ICS) 2018</i>,
+                Journal of Coastal Research, Special Issue No. 85,
+                pp. 591–595.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2018</td>
+              <td>
+                Kim, Y. S., C. J. Jang, and S. W. Yeh,
+                Recent surface cooling in the Yellow and East China Seas and
+                the associated North Pacific climate regime shift,
+                <i>Cont. Shelf Res.</i>, 156: 43-54.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2017</td>
+              <td>
+                Shin, H.-J., C. J. Jang, and I.-U. Chung,
+                "A linear projection for the timing of unprecedented climate
+                in Korea."
+                <i>Asia-Pacific Journal of Atmospheric Sciences</i>,
+                53(4): 411-419.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2015</td>
+              <td>
+                Jung, C.-Y., H.-J. Shin, C. J. Jang and H.-J. Kim,
+                "Projected change in East Asian summer monsoon by dynamic
+                downscaling: Moisture budget analysis."
+                <i>Asia-Pacific Journal of Atmospheric Sciences</i>,
+                51(1): 77-89.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2015</td>
+              <td>
+                Park, T., C. J. Jang, M. Kwon, H. Na, and K.-Y. Kim,
+                "An effect of ENSO on summer surface salinity in the Yellow
+                and East China Seas."
+                <i>J. Mar. Sys.</i>, 141: 122-127.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2013</td>
+              <td>
+                Son. B. Y., C. J. Jang, S.-H. Kim,
+                Seasonal difference in linear trends of satellite-derived
+                chlorophyll-a in the East China Sea,
+                <i>Ocean and Polar Res.</i>, 35(2):147-155.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2012</td>
+              <td>
+                Lim, S.H., C. J. Jang, I. S. Oh, J.J. Park,
+                Climatology of the mixed layer depth in the East/Japan Sea,
+                <i>J. Mar. Syst.</i>, 96-97:1-14.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2011</td>
+              <td>
+                J.Y. Park, J.-S. Kug, J. Park, S.-W. Yeh, and C. J. Jang,
+                Variability of chlorophyll associated with ENSO and its
+                possible biological feedback in the Equatorial Pacific,
+                <i>J. Geophy. Res.</i>, 116(C10001).
+              </td>
+            </tr>
+
+            <tr>
+              <td>2011</td>
+              <td>
+                Jang, C. J., J. Park, T. Park, S. Yoo,
+                Response of the ocean mixed layer depth to global warming and
+                its impact on primary production: a case for the North Pacific
+                Ocean,
+                <i>ICES Journal of Marine Science</i>, 68(6):996-1007.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2011</td>
+              <td>
+                T. Park, C. J. Jang, J. H. Jungclaus, H. Haak, W. Park,
+                and I. S. Oh,
+                Effects of the Changjiang river discharge on sea surface
+                warming in the Yellow and East China Seas in summer,
+                <i>Cont. Shelf Res.</i>, 31(1):15-22.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2006</td>
+              <td>
+                Jang, C. J., C.-H. Kim, H. S. Min, S. K. Kang, and H.-J. Lee,
+                Evaluation of upper ocean temperature and mixed layer depth
+                in an eddy-permitting global ocean general circulation model,
+                <i>Ocean and Polar Research</i>, 28(3):245-258.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2002</td>
+              <td>
+                Jang, C. J., Y. Noh,
+                Simulation of the mixed layer in the western equatorial Pacific
+                warm pool,
+                <i>Ocean and Polar Research</i>, 24(2):135-146.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2002</td>
+              <td>
+                Jang, C. J., Y. Noh, C. H. Kim,
+                Seasonal variation of volume transport calculated from a global
+                ocean general circulation model,
+                <i>Ocean and Polar Research</i>, 24(1):1-18.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2002</td>
+              <td>
+                Jung, K. T., H. W. Kang, H. J. Lee, C. W. Park, S. D. Kim,
+                and C. J. Jang,
+                Circulation in the Bohai Sea and the northern Yellow Sea
+                based on a three-dimensional shelf-wide model,
+                <i>
+                  Impact of interface exchange on the biogeochemical processes
+                  of the Yellow and East China seas
+                </i>,
+                Bumshin Press, Seoul, p 403-430.
+              </td>
+            </tr>
+
+            <tr>
+              <td>2002</td>
+              <td>
+                Jung, K. T., H. J. Lee, J. K. So, C. J. Jang, and H. W. Kang,
+                A study on open boundary influence in simulating the oceanic
+                circulation in the Yellow Sea and the East China Sea,
+                <i>
+                  Impact of interface exchange on the biogeochemical processes
+                  of the Yellow and East China seas
+                </i>,
+                Bumshin Press, Seoul, p 433-457.
+              </td>
+            </tr>
+
+            <tr>
+              <td>1999</td>
+              <td>
+                Noh Y., C. J. Jang, and J.-W. Kim,
+                Large eddy simulation of open ocean deep convection with
+                application to the deep water formation in the East Sea
+                (Japan Sea),
+                <i>J. Oceanogr.</i>, 55:347-367.
+              </td>
+            </tr>
+
+            <tr>
+              <td>1996</td>
+              <td>
+                Noh Y., C. J. Jang, C. H. Kim, and J. H. Yoon,
+                Embedding an oceanic mixed layer model into an ocean general
+                circulation model of the East Sea (Japan Sea),
+                <i>La mer</i>, 34:95-107.
+              </td>
+            </tr>
+
+            <tr>
+              <td>1995</td>
+              <td>
+                Jang, C. J., K. Kim, and T. B. Shim,
+                Short-term variation of the mixed layer in the Korea Strait
+                in Autumn,
+                <i>J. Korean Soc. Oceanogr.</i>,
+                30(5):512-521 (in Korean).
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
       </div>
 
-      <h3 class="section-title">Conference Papers</h3>
-      <table class="pub-table">
-        <thead>
-          <tr>
-            <th style="width: 10%;">Year</th>
-            <th style="width: 65%;">Title & Authors</th>
-            <th style="width: 25%;">Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2026</td>
-            <td><strong>Recent rapid Intensification of Marine Heatwaves in Korean Waters: Category-Based Spatiotemporal Characteristics</strong><br><small>Yeo, Jin; Choi, Won Keun; Jang, Chan Joo</small></td>
-            <td><a href="https://sciwatch.kiost.ac.kr/handle/2020.kiost/48457" target="_blank">[Proceeding]</a></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="more-btn-container">
-        <a href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=284&type=conference" target="_blank" class="more-btn">Find Out More &rarr;</a>
-      </div>
-    </div>
 
-    <!-- [Members] -->
-    <div id="members" class="tab-content">
+      <!-- Dissertations -->
+      <h3 class="section-title">
+        Dissertations
+      </h3>
+
+      <ul style="padding-left: 20px; line-height: 1.8;">
+        <li>
+          <strong>Jang, Chan Joo (2002)</strong>:
+          Effects of the parameterization of vertical mixing in the ocean
+          general circulation model,
+          <i>Ph.D. thesis</i>, Yonsei University.
+        </li>
+
+        <li>
+          <strong>Jang, Chan Joo (1995)</strong>:
+          Short term variability of hydrography by advection in the Korea
+          Strait,
+          <i>M.S. thesis</i>, Seoul National University (in Korean).
+        </li>
+      </ul>
+
+
+      <!-- Conference Papers -->
+      <h3
+        class="section-title"
+        style="margin-top: 32px;"
+      >
+        Conference Papers
+      </h3>
+
+      <div class="pub-table-wrapper">
+        <table class="pub-table">
+          <thead>
+            <tr>
+              <th style="width: 10%;">Year</th>
+              <th style="width: 90%;">Title &amp; Authors</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>2026</td>
+              <td>
+                Recent rapid Intensification of Marine Heatwaves in Korean
+                Waters: Category-Based Spatiotemporal Characteristics
+                <br>
+                <small>
+                  Yeo, Jin; Choi, Won Keun; Jang, Chan Joo
+                </small>
+              </td>
+            </tr>
+
+            <tr>
+              <td>2025</td>
+              <td>
+                Projected Intensification of Extreme Wave Events in a Boreal
+                Marginal Sea of Northeast Asia under CMIP6 Wind Forcing
+                <br>
+                <small>
+                  Yoo, Jeseon; Ahmad, Bayhaqi; Jang, Chan Joo;
+                  Son, Dong Hwi; Han, MyeongHee; Bang, Min Seon
+                </small>
+              </td>
+            </tr>
+
+            <tr>
+              <td>2025</td>
+              <td>
+                Defining the SCTR depth in the Southwestern Tropical Indian
+                Ocean: Review and Revisit
+                <br>
+                <small>
+                  Jang, Chan Joo; Jung, Hee Seok; Azminuddin, Fuad;
+                  Mubarrok, Saat; Noh, Suyun; Kang, Dong-Jin
+                </small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="more-btn-container">
+        <a
+          href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=284&type=conference"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="more-btn"
+        >
+          Find Out More &rarr;
+        </a>
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         Members
+    ======================================================== -->
+    <section id="members" class="tab-content">
       <h2>Members</h2>
-      <h3 class="section-title">Researchers</h3>
+
+
+      <!-- Researchers -->
+      <h3 class="section-title">
+        Researchers
+      </h3>
+
       <div class="grid-4">
-        <div class="card">
-          <img src="images/researcher1.jpg" alt="Won Keun Choi" style="height: 180px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'">
-          <h4 style="font-size: 16px;">Won Keun Choi</h4>
-          <p style="font-size: 13px; margin-top: 4px;">📧 dnjsrms@kiost.ac.kr</p>
-          <p style="font-size: 13px; margin-top: 4px;"><a href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=229" target="_blank" style="color:#0d6efd;">[Profile Link]</a></p>
-        </div>
-      </div>
-    </div>
 
-    <!-- [Gallery] (수정: 슬라이더 동작 보장) -->
-    <div id="gallery" class="tab-content">
+        <div class="card member-card">
+          <img
+            src="images/최원근.jpg"
+            alt="Won Keun Choi"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'"
+          >
+
+          <h4 class="member-name">
+            Won Keun Choi
+          </h4>
+
+          <p class="member-email">
+            📧 dnjsrms@kiost.ac.kr
+          </p>
+
+          <p class="member-link">
+            <a
+              href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=229"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [Profile Link]
+            </a>
+          </p>
+        </div>
+
+
+        <div class="card member-card">
+          <img
+            src="images/방민경.jpg"
+            alt="Minkyoung Bang"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'"
+          >
+
+          <h4 class="member-name">
+            Minkyoung Bang
+          </h4>
+
+          <p class="member-email">
+            📧 b910111@kiost.ac.kr
+          </p>
+
+          <p class="member-link">
+            <a
+              href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=288"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [Profile Link]
+            </a>
+          </p>
+        </div>
+
+
+        <div class="card member-card">
+          <img
+            src="images/정희석.jpg"
+            alt="Hee Seok Jung"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'"
+          >
+
+          <h4 class="member-name">
+            Hee Seok Jung
+          </h4>
+
+          <p class="member-email">
+            📧 jhs86@kiost.ac.kr
+          </p>
+
+          <p class="member-link">
+            <a
+              href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=283"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [Profile Link]
+            </a>
+          </p>
+        </div>
+
+
+        <div class="card member-card">
+          <img
+            src="images/정의현.jpg"
+            alt="Euihyun Jung"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Researcher'"
+          >
+
+          <h4 class="member-name">
+            Euihyun Jung
+          </h4>
+
+          <p class="member-email">
+            📧 ehjung@kiost.ac.kr
+          </p>
+
+          <p class="member-link">
+            <a
+              href="https://sciwatch.kiost.ac.kr/researcher-profile?ep=10618"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [Profile Link]
+            </a>
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Students -->
+      <h3 class="section-title">
+        Students
+      </h3>
+
+      <div class="grid-4">
+
+        <div class="card member-card">
+          <img
+            src="images/이호연.jpg"
+            alt="Hoyeon Lee"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Student'"
+          >
+
+          <h4 class="member-name">
+            Hoyeon Lee (M.S.)
+          </h4>
+
+          <p class="member-email">
+            📧 1209tim@kiost.ac.kr
+          </p>
+        </div>
+
+
+        <div class="card member-card">
+          <img
+            src="images/여진.jpg"
+            alt="Jin Yeo"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Student'"
+          >
+
+          <h4 class="member-name">
+            Jin Yeo (M.S.)
+          </h4>
+
+          <p class="member-email">
+            📧 yeojin006@kiost.ac.kr
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Alumni -->
+      <h3 class="section-title">
+        Alumni
+      </h3>
+
+      <div class="grid-4">
+
+        <div class="card member-card">
+          <img
+            src="images/researcher1.jpg"
+            alt="Alumni"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Alumni'"
+          >
+
+          <h4 class="member-name">
+            ex) 홍길동 (Ph.D.)
+          </h4>
+
+          <p class="member-position">
+            Current: KIOST Senior Researcher
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Externs -->
+      <h3 class="section-title">
+        Externs
+      </h3>
+
+      <div class="grid-4">
+
+        <div class="card member-card">
+          <img
+            src="images/황서영.jpg"
+            alt="Seoyoung Hwang"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Extern'"
+          >
+
+          <h4 class="member-name">
+            Seoyoung Hwang
+          </h4>
+
+          <p class="member-email">
+            📧 syhwang@kiost.ac.kr
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Visitors -->
+      <h3 class="section-title">
+        Visitors
+      </h3>
+
+      <div class="grid-4">
+
+        <div class="card member-card">
+          <img
+            src="images/researcher1.jpg"
+            alt="Visitor"
+            class="member-photo"
+            onerror="this.src='https://via.placeholder.com/200x200?text=Visitor'"
+          >
+
+          <h4 class="member-name">
+            ex) 방문자
+          </h4>
+
+          <p class="member-position">
+            Visiting Scholar
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         Gallery
+    ======================================================== -->
+    <section id="gallery" class="tab-content">
       <h2>Gallery</h2>
+
       <div class="grid-2">
-        
+
+        <!-- Gallery Item 1 -->
         <div class="card">
-          <img src="images/연구진사진테크노파크코스모스2016-10-11.jpg" alt="2016-10-11" style="height: 300px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/600x300?text=2016-10-11'">
-          <h4>테크노파크 코스모스</h4>
-          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">2016-10-11</p>
+          <img
+            src="images/연구진사진테크노파크코스모스2016-10-11.jpg"
+            alt="2016-10-11 테크노파크 코스모스"
+            style="height: 300px;"
+            onerror="this.src='https://via.placeholder.com/600x300?text=2016-10-11'"
+          >
+
+          <h4>
+            테크노파크 코스모스
+          </h4>
+
+          <p
+            style="font-size: 14px; color: #6c757d; margin-top: 4px;"
+          >
+            2016-10-11
+          </p>
         </div>
 
+
+        <!-- Gallery Item 2 -->
         <div class="card">
-          <img src="images/시화호2014-10-31.jpg" alt="2014-10-31" style="height: 300px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/600x300?text=2014-10-31'">
-          <h4>시화호 현장 조사</h4>
-          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">2014-10-31</p>
+          <img
+            src="images/시화호2014-10-31.jpg"
+            alt="2014-10-31 시화호 현장 조사"
+            style="height: 300px;"
+            onerror="this.src='https://via.placeholder.com/600x300?text=2014-10-31'"
+          >
+
+          <h4>
+            시화호 현장 조사
+          </h4>
+
+          <p
+            style="font-size: 14px; color: #6c757d; margin-top: 4px;"
+          >
+            2014-10-31
+          </p>
         </div>
 
-        <!-- 슬라이더 영역 -->
-        <div class="card">
-          <div class="slider-container" id="snow-slider">
-            <button class="slider-btn prev" onclick="moveSlide('snow-slider', -1)">&lt;</button>
 
-            <!-- 첫 번째 이미지에만 active 클래스 부여 -->
-            <img src="images/1눈온날20120203.jpg" class="active" alt="눈온날 1" onerror="this.src='https://via.placeholder.com/600x300?text=1눈온날20120203'">
-            <img src="images/2눈온날20120203.jpg" alt="눈온날 2" onerror="this.src='https://via.placeholder.com/600x300?text=2눈온날20120203'">
-            <img src="images/3눈온날20120203.jpg" alt="눈온날 3" onerror="this.src='https://via.placeholder.com/600x300?text=3눈온날20120203'">
-            
-            <button class="slider-btn next" onclick="moveSlide('snow-slider', 1)">&gt;</button>
+        <!-- Gallery Item 3: Snow Slider -->
+        <div class="card">
+          <div
+            class="slider-container"
+            id="snow-slider"
+          >
+            <button
+              type="button"
+              class="slider-btn prev"
+              onclick="moveSlide('snow-slider', -1)"
+              aria-label="Previous image"
+            >
+              &lt;
+            </button>
+
+            <img
+              src="images/1눈온날20120203.jpg"
+              class="active"
+              alt="눈 온 날 연구실 사진 1"
+              onerror="this.src='https://via.placeholder.com/600x300?text=1눈온날20120203'"
+            >
+
+            <img
+              src="images/2눈온날20120203.jpg"
+              alt="눈 온 날 연구실 사진 2"
+              onerror="this.src='https://via.placeholder.com/600x300?text=2눈온날20120203'"
+            >
+
+            <img
+              src="images/3눈온날20120203.jpg"
+              alt="눈 온 날 연구실 사진 3"
+              onerror="this.src='https://via.placeholder.com/600x300?text=3눈온날20120203'"
+            >
+
+            <button
+              type="button"
+              class="slider-btn next"
+              onclick="moveSlide('snow-slider', 1)"
+              aria-label="Next image"
+            >
+              &gt;
+            </button>
           </div>
-          <h4>눈 온 날 연구실 기록</h4>
-          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">2012-02-03</p>
+
+          <h4>
+            눈 온 날 연구실 기록
+          </h4>
+
+          <p
+            style="font-size: 14px; color: #6c757d; margin-top: 4px;"
+          >
+            2012-02-03
+          </p>
         </div>
 
+
+        <!-- Gallery Item 4 -->
         <div class="card">
-          <img src="images/유장연구진회식2011-05-16.jpg" alt="2011-05-16" style="height: 300px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/600x300?text=2011-05-16'">
-          <h4>연구진 회식</h4>
-          <p style="font-size: 14px; color: #6c757d; margin-top: 4px;">2011-05-16</p>
+          <img
+            src="images/유장연구진회식2011-05-16.jpg"
+            alt="2011-05-16 연구진 회식"
+            style="height: 300px;"
+            onerror="this.src='https://via.placeholder.com/600x300?text=2011-05-16'"
+          >
+
+          <h4>
+            연구진 회식
+          </h4>
+
+          <p
+            style="font-size: 14px; color: #6c757d; margin-top: 4px;"
+          >
+            2011-05-16
+          </p>
         </div>
 
       </div>
-    </div>
+    </section>
 
-    <!-- [Contact] (수정: 구글 지도 Embed 및 연결 링크 추가) -->
-    <div id="contact" class="tab-content">
+
+    <!-- =======================================================
+         Contact
+    ======================================================== -->
+    <section id="contact" class="tab-content">
       <h2>Contact Us</h2>
-      <div class="card" style="margin-top: 16px;">
-        <p style="margin-bottom: 12px;"><strong>Location:</strong> KIOST, 385 Haeyang-ro, Yeongdo-gu, Busan, South Korea</p>
-        <p style="margin-bottom: 12px;"><strong>Email:</strong> cjjang@kiost.ac.kr</p>
-        <p style="margin-bottom: 12px;"><strong>Phone:</strong> 051-664-3117</p>
-        <p style="margin-bottom: 16px;"><strong>Office Hours:</strong> Mon - Fri, 09:00 - 18:00</p>
-        
-        <!-- 구글 지도 이동 버튼 -->
-        <a href="https://maps.app.goo.gl/Dwt598Ys6ZY4QAxv9" target="_blank" class="more-btn" style="margin-bottom: 12px;">
+
+      <div class="card">
+
+        <p class="contact-item">
+          <strong>Location:</strong>
+          KIOST, 385 Haeyang-ro, Yeongdo-gu, Busan, South Korea
+        </p>
+
+        <p class="contact-item">
+          <strong>Email:</strong>
+          cjjang@kiost.ac.kr
+        </p>
+
+        <p class="contact-item">
+          <strong>Phone:</strong>
+          051-664-3117
+        </p>
+
+        <p class="contact-hours">
+          <strong>Office Hours:</strong>
+          Mon - Fri, 09:00 - 18:00
+        </p>
+
+
+        <!-- Google Maps Link -->
+        <a
+          href="https://maps.app.goo.gl/6Gc6mjonRUcZW4XS7"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="more-btn"
+        >
           Google Maps에서 위치 열기 &rarr;
         </a>
 
-        <!-- 구글 임베드 지도 -->
+
+        <!-- Google Maps Embed -->
         <div class="map-container">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3264.8102611726053!2d129.07689107638062!3d35.07400137279017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35a399f2b3e8e19d%3A0x86b363bc184cb263!2zS0lPU1Qg7KGw7ZWp7ZWt7JWR7Iug7ZWp7JuQ!5e0!3m2!1sko!2skr!4v1700000000000!5m2!1sko!2skr" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3264.8102611726053!2d129.07689107638062!3d35.07400137279017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35a399f2b3e8e19d%3A0x86b363bc184cb263!2z44SN44S544S344So7KGw7ZWp7ZWt7JWR7Iug7ZWp7JuQ!5e0!3m2!1sko!2skr!4v1710000000000!5m2!1sko!2skr"
+            title="KIOST Google Maps"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
+
       </div>
-    </div>
+    </section>
+
   </main>
 
-  <!-- JavaScript 스크립트 -->
+
+  <!-- =========================================================
+       JavaScript
+  ========================================================== -->
   <script>
-    // 1. 상단 메인 탭 전환 함수
-    function openTab(evt, tabName) {
-      const contents = document.getElementsByClassName("tab-content");
-      for (let i = 0; i < contents.length; i++) {
-        contents[i].classList.remove("active");
+    /**
+     * Main tab navigation
+     */
+    function openTab(event, tabName) {
+      const contents = document.querySelectorAll(".tab-content");
+      const buttons = document.querySelectorAll(".nav-btn");
+
+      contents.forEach((content) => {
+        content.classList.remove("active");
+      });
+
+      buttons.forEach((button) => {
+        button.classList.remove("active");
+      });
+
+      const targetTab = document.getElementById(tabName);
+
+      if (targetTab) {
+        targetTab.classList.add("active");
       }
 
-      const buttons = document.getElementsByClassName("nav-btn");
-      for (let i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("active");
+      if (event?.currentTarget) {
+        event.currentTarget.classList.add("active");
       }
-
-      document.getElementById(tabName).classList.add("active");
-      evt.currentTarget.classList.add("active");
     }
 
-    // 2. Research 내부 서브 탭 전환 함수
-    function openSubTab(evt, subTabName) {
-      const subContents = document.getElementsByClassName("sub-tab-content");
-      for (let i = 0; i < subContents.length; i++) {
-        subContents[i].classList.remove("active");
+
+    /**
+     * Research sub-tab navigation
+     */
+    function openSubTab(event, subTabName) {
+      const contents =
+        document.querySelectorAll(".sub-tab-content");
+
+      const buttons =
+        document.querySelectorAll(".sub-tab-btn");
+
+      contents.forEach((content) => {
+        content.classList.remove("active");
+      });
+
+      buttons.forEach((button) => {
+        button.classList.remove("active");
+      });
+
+      const targetTab =
+        document.getElementById(subTabName);
+
+      if (targetTab) {
+        targetTab.classList.add("active");
       }
 
-      const subButtons = document.getElementsByClassName("sub-tab-btn");
-      for (let i = 0; i < subButtons.length; i++) {
-        subButtons[i].classList.remove("active");
+      if (event?.currentTarget) {
+        event.currentTarget.classList.add("active");
       }
-
-      document.getElementById(subTabName).classList.add("active");
-      evt.currentTarget.classList.add("active");
     }
 
-    // 3. Gallery 좌우 슬라이드(캐러셀) 제어 함수 (수정: 오류 원인 해결)
+
+    /**
+     * Gallery slider
+     */
     function moveSlide(containerId, direction) {
-      const container = document.getElementById(containerId);
-      // img 태그만 정확하게 필터링하여 선택
-      const images = container.querySelectorAll('img');
-      let currentIndex = -1;
+      const container =
+        document.getElementById(containerId);
 
-      // 현재 active 클래스를 가진 이미지 탐색
-      for (let i = 0; i < images.length; i++) {
-        if (images[i].classList.contains('active')) {
-          currentIndex = i;
-          images[i].classList.remove('active');
-          break;
-        }
+      if (!container) {
+        return;
       }
 
-      // 만약 active가 없다면 0번째로 기본 설정
-      if (currentIndex === -1) currentIndex = 0;
+      const images =
+        container.querySelectorAll("img");
 
-      // 다음 슬라이드 인덱스 계산 (배열 범위를 넘어설 경우 인덱스 순환)
-      let nextIndex = currentIndex + direction;
-      if (nextIndex >= images.length) nextIndex = 0;
-      if (nextIndex < 0) nextIndex = images.length - 1;
+      if (images.length === 0) {
+        return;
+      }
 
-      // 계산된 인덱스의 이미지 활성화
-      images[nextIndex].classList.add('active');
+      let currentIndex = 0;
+
+      images.forEach((image, index) => {
+        if (image.classList.contains("active")) {
+          currentIndex = index;
+        }
+
+        image.classList.remove("active");
+      });
+
+      let nextIndex =
+        currentIndex + direction;
+
+      if (nextIndex >= images.length) {
+        nextIndex = 0;
+      }
+
+      if (nextIndex < 0) {
+        nextIndex = images.length - 1;
+      }
+
+      images[nextIndex].classList.add("active");
     }
   </script>
+
 </body>
 </html>
